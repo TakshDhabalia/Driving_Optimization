@@ -2,11 +2,12 @@ from PIL import Image
 import cv2
 import numpy as np
 import requests
+import Detection_updated
+import MQTT
 
-image = cv2.imread('lmao_car_2.jpeg')
+image = cv2.imread('lmao_car_1.jpeg')
 
 image_arr = np.array(image)
-
 
 grey = cv2.cvtColor(image_arr, cv2.COLOR_BGR2GRAY)
 
@@ -27,7 +28,10 @@ for (x, y, w, h) in cars:
     cv2.rectangle(image_arr, (x, y), (x + w, y + h), (255, 0, 0), 2)
     cnt += 1
 print(cnt, " cars found")
-
+client = MQTT.connect_mqtt()
+client.loop_start()
+MQTT.publish(client)
+client.loop_stop()
 
 annotated_image = Image.fromarray(image_arr)
 annotated_image.show()
