@@ -1,6 +1,7 @@
 import cv2 
 import numpy as np 
-cap = cv2.VideoCapture('video.mp4')
+cap = cv2.VideoCapture("http://10.21.41.155:8080/video")
+#cap = cv2.VideoCapture("./video.mp4")
 min_width = 80 
 min_height = 80
 count_line_posotion = 550 
@@ -19,13 +20,13 @@ while True:
     kernal = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
     dilatada = cv2.morphologyEx(dilat, cv2.MORPH_CLOSE, kernal)
     dilatada = cv2.morphologyEx(dilatada, cv2.MORPH_CLOSE, kernal)
-    counterShape = cv2.findContours(dilatada, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    counterShape , h = cv2.findContours(dilatada, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
     cv2.line(frame1, (25, count_line_posotion), (1200, count_line_posotion), (255, 127, 0), 3)
 
-    cv2.imshow('Frame', frame1)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
+    for (i,c) in enumerate(counterShape):
+        (x,y,w,h) = cv2.boundingRect(c)
+        validate_encounter = (w>= min_width) and (h>=min_height)
+        if not validate_encounter:
+            continue
+        cv2.rectangle(frame1 , (x,y), (x+w , y+h) , (0,0,255) , 2)

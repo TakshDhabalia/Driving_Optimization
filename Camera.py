@@ -3,7 +3,7 @@ import time
 import os as os
 
 
-cap = cv2.VideoCapture("https://172.16.181.59:8888/")
+cap = cv2.VideoCapture("http://10.21.41.155:8080/video")
 
 
 if not cap.isOpened():
@@ -12,7 +12,7 @@ if not cap.isOpened():
 if cap.isOpened():
     print("works")
 
-capture_interval = 10
+capture_interval = 1
 
 
 photo_counter = 0
