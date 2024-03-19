@@ -3,9 +3,7 @@ import cv2
 import numpy as np
 import requests
 
-image_url = 'lmao_car_1.jpeg'
-
-image = image_url.resize((450, 250))
+image = cv2.imread('lmao_car_2.jpeg')
 
 image_arr = np.array(image)
 
@@ -24,14 +22,6 @@ car_cascade_src = 'cars.xml'
 car_cascade = cv2.CascadeClassifier(car_cascade_src)
 cars = car_cascade.detectMultiScale(closing, 1.1, 1)
 
-kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2, 2))
-closing = cv2.morphologyEx(dilated, cv2.MORPH_CLOSE, kernel)
-
-
-
-car_cascade_src = 'cars.xml'
-car_cascade = cv2.CascadeClassifier(car_cascade_src)
-cars = car_cascade.detectMultiScale(closing, 1.1, 1)
 cnt = 0
 for (x, y, w, h) in cars:
     cv2.rectangle(image_arr, (x, y), (x + w, y + h), (255, 0, 0), 2)
