@@ -6,8 +6,8 @@ import time
 from paho.mqtt import client as mqtt_client
 
 
-broker = 'localhost'
-port = 1993
+broker = '172.16.181.64'
+port = 1883
 topic = "python/mqtt"
 
 client_id = f'publish-{random.randint(0, 1000)}'

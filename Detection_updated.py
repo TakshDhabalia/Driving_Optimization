@@ -30,7 +30,7 @@ for (x, y, w, h) in cars:
 print(cnt, " cars found")
 client = MQTT.connect_mqtt()
 client.loop_start()
-MQTT.publish(client)
+MQTT.publish(client, "main" , "69")
 client.loop_stop()
 
 annotated_image = Image.fromarray(image_arr)
