@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 
 class MQTTClient:
     def __init__(self, broker, port):
-        self.client_id = f'client-{random.randint(0, 1000)}'
+        self.client_id = "MAIN"
         self.broker = broker
         self.port = port
         self.client = mqtt.Client(self.client_id)
@@ -33,5 +33,10 @@ class MQTTClient:
 
     def unsubscribe(self, topic):
         self.client.unsubscribe(topic)
+    
+    def publish_loop(self , topic , msg , times):
+        for i in range(times):
+            self.publish(topic=topic, message=msg)
+            time.sleep(5)            
 
 

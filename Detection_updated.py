@@ -9,6 +9,7 @@ import time
 count = 1
 
 def car_detection(count):
+
     while True:
         image = cv2.imread(f"images/{count}.jpeg")
         
@@ -27,15 +28,16 @@ def car_detection(count):
         car_cascade = cv2.CascadeClassifier(car_cascade_src)
         cars = car_cascade.detectMultiScale(closing, 1.1, 1)
 
+        
         cnt = 0
         for (x, y, w, h) in cars:
             cv2.rectangle(image_arr, (x, y), (x + w, y + h), (255, 0, 0), 2)
             cnt += 1
         print(cnt, " cars found")
         count += 15
-        time.sleep(20
-        
-        )
+        time.sleep(5)
+        return cnt 
+    
 
 def annotated_images():
     annotated_image = image.fromarray(car_detection.image_arr)
@@ -46,14 +48,16 @@ def annotated_images():
 if __name__ == "__main__":
     t1 = threading.Thread(target=car_detection, args=(count,))
     t2 = threading.Thread(target=cam.capture_images, args=("https://192.168.1.14:8080/video", 3))
-    t3 = threading.Thread(target = MQTT.connect_mqtt)#works till here 
-    
-    t4 = threading.Thread(target = MQTT.publish, args=("172.28.66.244", 1883, "ESIOT" ))
+    client = MQTT.MQTTClient("172.28.66.244", 1883)
+    client.connect()
+    status_number = car_detection(count=count)
+    t4 = threading.Thread(target=MQTT.MQTTClient.publish_loop, args=(client, "ESIOT", status_number, 5))
+
     t1.start()
     print("t1 started")
     t2.start()
     print("t2 started")
-    t3.start()
+
     t4.start()
     t1.join()
     t2.join()
