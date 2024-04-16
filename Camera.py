@@ -4,7 +4,7 @@ import os as os
 
 
 cap = cv2.VideoCapture("http://10.21.41.155:8080/video")
-
+#samanyu : http://172.20.10.2:8084/?action=stream
 
 if not cap.isOpened():
     print("lavde link galat hai")
@@ -18,7 +18,7 @@ capture_interval = 1
 photo_counter = 0
 last_capture_time = time.time()
 
-
+start_time=time.time()
 while True:
 
     ret, frame = cap.read()
@@ -50,6 +50,8 @@ while True:
     if cv2.waitKey(1)  == ord('q'):
         break
 
+end_time = current_time-start_time()
+print(f"Total Runtime : {end_time}")
 
 cap.release()
 cv2.destroyAllWindows()
