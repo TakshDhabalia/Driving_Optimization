@@ -33,7 +33,9 @@ def car_detection(count):
             cnt += 1
         print(cnt, " cars found")
         count += 15
-        time.sleep(9)
+        time.sleep(20
+        
+        )
 
 def annotated_images():
     annotated_image = image.fromarray(car_detection.image_arr)
@@ -44,9 +46,14 @@ def annotated_images():
 if __name__ == "__main__":
     t1 = threading.Thread(target=car_detection, args=(count,))
     t2 = threading.Thread(target=cam.capture_images, args=("https://192.168.1.14:8080/video", 3))
+    t3 = threading.Thread(target = MQTT.connect_mqtt)#works till here 
+    
+    t4 = threading.Thread(target = MQTT.publish, args=("172.28.66.244", 1883, "ESIOT" ))
     t1.start()
     print("t1 started")
     t2.start()
     print("t2 started")
+    t3.start()
+    t4.start()
     t1.join()
     t2.join()
