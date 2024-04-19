@@ -7,7 +7,7 @@ import Camera as cam
 import os
 
 count = 1
-car_count = 0  #had to make this glibal ik am dumb
+car_count = 1  #had to make this glibal ik am dumb
 
 def car_detection(image_path):
     image = cv2.imread(image_path)
@@ -32,7 +32,8 @@ def car_detection_repeated(count, freq):
     for i in range(freq):
         image_path = f"images/{count}.jpeg"
         car_count += car_detection(image_path)  
-        count += 5
+        count += 1
+        return car_count
         time.sleep(5)
 
 if __name__ == "__main__":
@@ -40,11 +41,11 @@ if __name__ == "__main__":
     if not os.path.exists("images"):
         os.makedirs("images")
 
-    t1 = threading.Thread(target=car_detection_repeated, args=(count, 10))
-    t2 = threading.Thread(target=cam.capture_images, args=("https://192.168.1.14:8080/video", 3))
-    client = MQTT.MQTTClient("172.28.66.244", 1883)
+    t1 = threading.Thread(target=car_detection_repeated, args=(count, 100))
+    t2 = threading.Thread(target=cam.capture_images, args=("http://192.168.71.78:8084/?action=stream", 3))
+    client = MQTT.MQTTClient("192.168.71.78", 1885)
     client.connect()
-    t4 = threading.Thread(target=client.publish_loop, args=("ESIOT", car_count+, 10))
+    t4 = threading.Thread(target=client.publish_loop, args=("ESIOT", car_detection_repeated(count=count , freq=20), 100))
 
     t1.start()
     print("t1 started")
