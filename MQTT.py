@@ -36,7 +36,9 @@ class MQTTClient:
     
     def publish_loop(self , topic , msg , times):
         for i in range(times):
+            k = msg
             self.publish(topic=topic, message=msg)
-            time.sleep(5)            
+            print(f"published {k}")
+            time.sleep(10)            
 
 
