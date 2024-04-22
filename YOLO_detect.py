@@ -63,7 +63,7 @@ def monitor_images(freq):
             
             # Print car count information
             print(f"At t={i+1}, Total Cars Detected: {current_car_count} in {i}.jpeg")
-            
+            client.publish("ESIOT" , current_car_count)
             time.sleep(2)
 
 if __name__ == "__main__":
@@ -81,11 +81,11 @@ if __name__ == "__main__":
     image_monitor_thread = threading.Thread(target=monitor_images, args=(100,))
     
     # Start MQTT thread with lmao value
-    MQTT_thread = threading.Thread(target=client.publish_loop, args=("ESIOT", lmao, 100))
+    #MQTT_thread = threading.Thread(target=client.publish_loop, args=("ESIOT", lmao, 100))
     
     image_monitor_thread.start()
     print("Img started")
     camera_thread.start()
     print("Cam thread Started")
-    MQTT_thread.start()
+    #MQTT_thread.start()
     print("MQTT started")
