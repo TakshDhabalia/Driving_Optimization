@@ -27,6 +27,7 @@ This project is a **Smart Parking System** designed using IoT technologies, real
   - [Code](#code)
 
 ---
+![Smart Parking System Diagram](./DEMO/ESIOT_PMS_Diagram.jpg)
 
 ## Introduction
 Urbanization and the increasing number of automobiles have led to a growing demand for parking space. Conventional parking systems suffer from inefficiencies like congestion and a lack of real-time visibility. Our **Smart Parking System** provides real-time parking availability information using IoT, automating parking guidance to reduce traffic and enhance the overall user experience.
